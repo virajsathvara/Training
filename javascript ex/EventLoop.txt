@@ -1,0 +1,2 @@
+https://blog.bitsrc.io/understanding-asynchronous-javascript-the-event-loop-74cd408419ff
+https://www.youtube.com/watch?v=mk0lu9MKBto

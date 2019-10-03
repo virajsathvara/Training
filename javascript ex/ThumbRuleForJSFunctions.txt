@@ -1,0 +1,28 @@
+
+A while ago our team migrated all its code (a mid-sized AngularJS app) to JavaScript compiled using Babel. I'm now using the following rule of thumb for functions in ES6 and beyond:
+
+1. Use function in the global scope and for Object.prototype properties.
+2. Use class for object constructors.
+3. Use => everywhere else.
+
+
+Why use arrow functions almost everywhere?
+
+1. Scope safety: When arrow functions are used consistently, everything is guaranteed to use the same thisObject as the root. If even a single standard function callback is mixed in with a bunch of arrow functions there's a chance the scope will become messed up.
+
+2. Compactness: Arrow functions are easier to read and write. (This may seem opinionated so I will give a few examples further on).
+
+3. Clarity: When almost everything is an arrow function, any regular function immediately sticks out for defining the scope. A developer can always look up the next-higher function statement to see what the thisObject is.
+
+
+Why always use regular functions on the global scope or module scope?
+
+- To indicate a function that should not access the thisObject.
+- The window object (global scope) is best addressed explicitly.
+- Many Object.prototype definitions live in the global scope (think String.prototype.truncate etc.) and those generally have to be of type function anyway. - - Consistently using function on the global scope helps avoid errors.
+- Many functions in the global scope are object constructors for old-style class definitions.
+- Functions can be named. 
+        This has two benefits: 
+        (1) It is less awkward to writefunction foo(){} than const foo = () => {} — in particular outside other function calls. 
+        (2) The function name shows in stack traces. While it would be tedious to name every internal callback, naming all the public functions is probably a good idea.
+- Function declarations are hoisted, (meaning they can be accessed before they are declared), which is a useful attribute in a static utility function.
